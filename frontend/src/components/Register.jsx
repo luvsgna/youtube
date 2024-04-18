@@ -13,19 +13,32 @@ export default function Register({ setShowRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newUser = {
-      username: usernameRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
+        username: usernameRef.current.value,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
     };
 
     try {
-      await axios.post("/users/register", newUser);
-      setError(false);
-      setSuccess(true);
+        console.log(newUser);
+        const response = await fetch("/users/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUser),
+        });
+
+        if (response.ok) {
+            setError(false);
+            setSuccess(true);
+        } else {
+            throw new Error("Failed to register user");
+        }
     } catch (err) {
-      setError(true);
+        setError(true);
     }
-  };
+};
+
   return (
     <div className="registerContainer">
       <div className="logo">

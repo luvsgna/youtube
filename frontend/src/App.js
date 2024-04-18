@@ -6,6 +6,7 @@ import axios from "axios";
 import { format } from "timeago.js";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import React, { Fragment } from 'react';
 
 function App() {
   const myStorage = window.localStorage;
@@ -78,7 +79,7 @@ function App() {
     <div style={{ height: "100vh", width: "100%" }}>
       <ReactMapGL
         {...viewport}
-        mapboxApiAccessToken=""
+        mapboxApiAccessToken="pk.eyJ1IjoidGhpc2lzbGF2YW55YSIsImEiOiJjbHYycXVuOGEwaTZ1MmxxZzFqOWtzcmU4In0.sbjbzTCjn-tBFiqbvrKCTg"
         width="100%"
         height="100%"
         transitionDuration="200"
@@ -86,8 +87,9 @@ function App() {
         onViewportChange={(viewport) => setViewport(viewport)}
         onDblClick={currentUsername && handleAddClick}
       >
-        {pins.map((p) => (
-          <>
+        
+        {pins.map((p, index) => (
+          <Fragment key={index}>
             <Marker
               latitude={p.lat}
               longitude={p.long}
@@ -131,8 +133,9 @@ function App() {
                 </div>
               </Popup>
             )}
-          </>
+          </Fragment>
         ))}
+        
         {newPlace && (
           <>
             <Marker
@@ -212,6 +215,7 @@ function App() {
           />
         )}
       </ReactMapGL>
+      
     </div>
   );
 }
